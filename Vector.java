@@ -21,4 +21,12 @@ public class Vector {
     public double getMagnitude() {
         return magnitude;
     }
+
+    public Vector add(Vector other){
+        return new Vector(xComponent + other.getX(), yComponent + other.getY());
+    }
+
+    public Vector multiply(double scalar){
+        return new Vector(xComponent * scalar, yComponent * scalar);
+    }
 }
