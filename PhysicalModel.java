@@ -46,4 +46,8 @@ public class PhysicalModel {
     public void updatePosition(Vector velocity, double dTime){
         position = position.add(velocity.multiply(dTime));
     }
+
+    protected void setPosition(Vector newPosition){
+        this.position = newPosition;
+    }
 }
