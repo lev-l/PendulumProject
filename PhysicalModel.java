@@ -2,6 +2,11 @@ public class PhysicalModel {
     private double mass;
     private Vector position;
 
+    public PhysicalModel(){
+        mass = 1.0;
+        position = new Vector(0, 0);
+    }
+
     // Creates a simplistic representation of a physical object.
     public PhysicalModel(double mass, Vector position) {
         this.mass = mass;
