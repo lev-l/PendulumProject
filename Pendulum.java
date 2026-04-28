@@ -1,11 +1,9 @@
-import java.lang.annotation.Inherited;
-
-public class Pendelum extends PhysicalModel {
+public class Pendulum extends PhysicalModel {
     private Vector pivotPosition; // The fixed position of the pivot.
     private double inclination; // The angle from the vertical, radians.
     private double length; // The length of the pendulum rod.
 
-    public Pendelum(double mass, Vector pivotPosition, double initialInclination, double length){
+    public Pendulum(double mass, Vector pivotPosition, double initialInclination, double length){
         super(mass, translateWeightPosition(initialInclination, length, pivotPosition));
         this.pivotPosition = pivotPosition;
         this.inclination = initialInclination;
