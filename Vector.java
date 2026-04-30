@@ -10,6 +10,13 @@ public class Vector {
         this.magnitude = Math.sqrt(xComponent * xComponent + yComponent * yComponent);
     }
 
+    // Creates a vector based on magnitude and angle from horizontal.
+    public Vector(double magnitude, long angle){
+        this.magnitude = magnitude;
+        this.xComponent = magnitude * Math.cos(angle);
+        this.yComponent = magnitude * Math.sin(angle);
+    }
+
     public double getX() {
         return xComponent;
     }
