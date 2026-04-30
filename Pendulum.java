@@ -10,6 +10,18 @@ public class Pendulum extends PhysicalModel {
         this.length = length;
     }
 
+    public Vector getPivotPosition(){
+        return pivotPosition;
+    }
+
+    public double getInclination(){
+        return inclination;
+    }
+
+    public double getLength(){
+        return length;
+    }
+
     // Finds the position of the pendulum's weight based on pivot position, inclination, and length.
     private static Vector translateWeightPosition(double inclination, double length, Vector pivotPosition){
         Vector relativePosition = new Vector(length * Math.sin(inclination), length * Math.cos(inclination));
@@ -20,10 +32,9 @@ public class Pendulum extends PhysicalModel {
     public void update(double dTime){
         // Calculates forces on the pendulum.
         Vector gravityForce = new Vector(0, -9.81 * getMass());
-        // Finds the tension force equal and opposite to the component of gravity along the rod.
-        Vector tensionForce = new Vector
-                                (-gravityForce.getMagnitude() * Math.sin(2 * inclination) / 2,
-                                -gravityForce.getMagnitude() * Math.pow(Math.cos(inclination), 2));
+        // Finds the tension force equal and opposite to the component of gravity along the rod.   
+        double gravityAlongRodMagnitude = gravityForce.getMagnitude() * Math.cos(inclination);
+        Vector tensionForce = new Vector(new double[]{gravityAlongRodMagnitude, inclination + Math.PI / 2});
         Vector[] forces = new Vector[]{gravityForce, tensionForce};
 
         // Finds the state variables (net force, acceleration, velocity) and updates position.
@@ -36,7 +47,7 @@ public class Pendulum extends PhysicalModel {
 
     // Increments inclination and updates position based on angular velocity and return new position.
     public Vector updatePosition(Vector velocity, double dTime){
-        inclination += velocity.getMagnitude() * dTime;
+        inclination += velocity.getMagnitude() * dTime * Math.signum(velocity.getX());
         setPosition(translateWeightPosition(inclination, length, pivotPosition));
         return getPosition();
     }
