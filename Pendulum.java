@@ -20,7 +20,10 @@ public class Pendulum extends PhysicalModel {
     public void update(double dTime){
         // Calculates forces on the pendulum.
         Vector gravityForce = new Vector(0, -9.81 * getMass());
-        Vector tensionForce = new Vector(-gravityForce.getMagnitude() * Math.tan(inclination), -gravityForce.getY());
+        // Finds the tension force equal and opposite to the component of gravity along the rod.
+        Vector tensionForce = new Vector
+                                (-gravityForce.getMagnitude() * Math.sin(2 * inclination) / 2,
+                                -gravityForce.getMagnitude() * Math.pow(Math.cos(inclination), 2));
         Vector[] forces = new Vector[]{gravityForce, tensionForce};
 
         // Finds the state variables (net force, acceleration, velocity) and updates position.
