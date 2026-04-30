@@ -29,4 +29,8 @@ public class Vector {
     public Vector multiply(double scalar){
         return new Vector(xComponent * scalar, yComponent * scalar);
     }
+
+    public String toString(){
+        return "{" + xComponent + ", " + yComponent + "}";
+    }
 }
