@@ -42,9 +42,10 @@ public class PhysicalModel {
         return acceleration.multiply(dTime);
     }
 
-    // Integrates velocity and updates position (assumes small dTime).
-    public void updatePosition(Vector velocity, double dTime){
+    // Integrates velocity and updates position (assumes small dTime), returns new position.
+    public Vector updatePosition(Vector velocity, double dTime){
         position = position.add(velocity.multiply(dTime));
+        return getPosition();
     }
 
     protected void setPosition(Vector newPosition){

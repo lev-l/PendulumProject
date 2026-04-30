@@ -34,9 +34,10 @@ public class Pendulum extends PhysicalModel {
         updatePosition(angularVelocity, dTime);
     }
 
-    // Increments inclination and updates position based on angular velocity.
-    public void getPosition(Vector velocity, double dTime){
+    // Increments inclination and updates position based on angular velocity and return new position.
+    public Vector updatePosition(Vector velocity, double dTime){
         inclination += velocity.getMagnitude() * dTime;
         setPosition(translateWeightPosition(inclination, length, pivotPosition));
+        return getPosition();
     }
 }
