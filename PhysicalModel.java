@@ -1,16 +1,19 @@
 public class PhysicalModel {
     private double mass;
     private Vector position;
+    private Vector velocity;
 
     public PhysicalModel(){
         mass = 1.0;
         position = new Vector(0, 0);
+        velocity = new Vector(0, 0);
     }
 
     // Creates a simplistic representation of a physical object.
-    public PhysicalModel(double mass, Vector position) {
+    public PhysicalModel(double mass, Vector position, Vector velocity){
         this.mass = mass;
         this.position = position;
+        this.velocity = velocity;
     }
 
     public double getMass() {
@@ -19,6 +22,10 @@ public class PhysicalModel {
 
     public Vector getPosition() {
         return position;
+    }
+
+    public Vector getVelocity() {
+        return velocity;
     }
 
     // Calculates the net force on the object from all forces acting on it.
@@ -38,14 +45,15 @@ public class PhysicalModel {
     }
 
     // Integrates acceleration (assumes small dTime).
-    public Vector calculateVelocity(Vector acceleration, double dTime){
-        return acceleration.multiply(dTime);
+    public Vector updateVelocity(Vector acceleration, double dTime){
+        velocity = velocity.add(acceleration.multiply(dTime));
+        return velocity;
     }
 
     // Integrates velocity and updates position (assumes small dTime), returns new position.
     public Vector updatePosition(Vector velocity, double dTime){
         position = position.add(velocity.multiply(dTime));
-        return getPosition();
+        return position;
     }
 
     protected void setPosition(Vector newPosition){

@@ -3,8 +3,8 @@ public class Pendulum extends PhysicalModel {
     private double inclination; // The angle from the vertical, radians.
     private double length; // The length of the pendulum rod.
 
-    public Pendulum(double mass, Vector pivotPosition, double initialInclination, double length){
-        super(mass, translateWeightPosition(initialInclination, length, pivotPosition));
+    public Pendulum(double mass, Vector pivotPosition, Vector initialVelocity, double initialInclination, double length){
+        super(mass, translateWeightPosition(initialInclination, length, pivotPosition), initialVelocity);
         this.pivotPosition = pivotPosition;
         this.inclination = initialInclination;
         this.length = length;
@@ -32,16 +32,21 @@ public class Pendulum extends PhysicalModel {
     public void update(double dTime){
         // Calculates forces on the pendulum.
         Vector gravityForce = new Vector(0, -9.81 * getMass());
-        // Finds the tension force equal and opposite to the component of gravity along the rod.   
+        /* Finds the tension force opposite to the component of gravity along the rod.
+        *  The magnitude is found to balance that component of gravity and produce the correct centripetal force.
+        */
         double gravityAlongRodMagnitude = gravityForce.getMagnitude() * Math.cos(inclination);
-        Vector tensionForce = new Vector(new double[]{gravityAlongRodMagnitude, inclination + Math.PI / 2});
+        double tensionForceMagnitude = Math.pow(getVelocity().getMagnitude(), 2) / length
+                                        + gravityAlongRodMagnitude;
+        Vector tensionForce = new Vector(new double[]{tensionForceMagnitude, inclination + Math.PI / 2});
+        
         Vector[] forces = new Vector[]{gravityForce, tensionForce};
 
         // Finds the state variables (net force, acceleration, velocity) and updates position.
         Vector netForce = calculateNetForce(forces);
         Vector acceleration = calculateAcceleration(netForce);
-        Vector velocity = calculateVelocity(acceleration, dTime);
-        Vector angularVelocity = velocity.multiply(1 / length); // Vertical to angular by w = v / r.
+        updateVelocity(acceleration, dTime);
+        Vector angularVelocity = getVelocity().multiply(1 / length); // Linear to angular by w = v / r.
         updatePosition(angularVelocity, dTime);
     }
 
