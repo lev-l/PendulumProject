@@ -45,7 +45,7 @@ public class PhysicalModel {
     }
 
     // Integrates acceleration (assumes small dTime).
-    public Vector calculateVelocity(Vector acceleration, double dTime){
+    public Vector updateVelocity(Vector acceleration, double dTime){
         velocity = velocity.add(acceleration.multiply(dTime));
         return velocity;
     }
