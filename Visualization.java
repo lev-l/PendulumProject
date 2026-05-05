@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import javax.swing.*;
+=======
+import java.awt.*;
+>>>>>>> 814ff5528db74aebab60ddcd7741c2b4d7ccda80
 
 public class Visualization {
     private JFrame frame;
