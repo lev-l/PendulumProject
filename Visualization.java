@@ -1,18 +1,20 @@
-<<<<<<< HEAD
+import java.awt.BorderLayout;
 import javax.swing.*;
-=======
-import java.awt.*;
->>>>>>> 814ff5528db74aebab60ddcd7741c2b4d7ccda80
 
 public class Visualization {
     private JFrame frame;
+    private PendulumPanel pendulumPanel;
 
-    public Visualization()
+    public Visualization(Pendulum pendulum)
     {
         frame = new JFrame("Pendulum Simulation");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.setResizable(false);
+
+        pendulumPanel = new PendulumPanel(pendulum);
+        frame.add(pendulumPanel, BorderLayout.CENTER);
+
         frame.setVisible(true);
     }
 }

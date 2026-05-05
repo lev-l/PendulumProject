@@ -1,6 +1,5 @@
-public class Simulation {
+public class Simulation {    
     public static void main(String[] args) {
-        Visualization visual = new Visualization();
 
         Pendulum pendulum = new Pendulum(1.0, new Vector(0, 0),
                                         new Vector(0, 0), Math.PI / 4, 1.0);
@@ -8,6 +7,7 @@ public class Simulation {
         System.out.println("Initial position: " + pendulum.getPosition());
         System.out.println("Initial inclination: " + pendulum.getInclination());
 
+        Visualization visual = new Visualization(pendulum);
         //pendulum.update(timeStep);
         //System.out.println("Position after first update: " + pendulum.getPosition());
         //System.out.println("Inclination after first update: " + pendulum.getInclination());
