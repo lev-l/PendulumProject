@@ -17,4 +17,8 @@ public class Visualization {
 
         frame.setVisible(true);
     }
+
+    public void update() {
+        pendulumPanel.repaint();
+    }
 }
