@@ -1,28 +1,50 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 public class Visualization {
-    private JFrame frame;
-    private JTextArea textDataOutput;
+    private JTextArea textDataOutput; 
     private PendulumPanel pendulumPanel;
     private double period;
 
     public Visualization(Pendulum pendulum)
     {
-        frame = new JFrame("Pendulum Simulation");
+        // Main window
+        JFrame frame = new JFrame("Pendulum Simulation");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
 
+        // Panel to draw the pendulum
         pendulumPanel = new PendulumPanel(pendulum);
         frame.add(pendulumPanel, BorderLayout.CENTER);
 
+        // Bottom panel with data output
         JPanel dataPanel = new JPanel();
         textDataOutput = new JTextArea("Period: " + period + " seconds;    Amplitude: 0.0;");
         textDataOutput.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         dataPanel.add(textDataOutput, BorderLayout.CENTER);
         frame.add(dataPanel, BorderLayout.SOUTH);
+
+        // Buttons to control the simulation
+        JPanel buttonsPanel = new JPanel(new GridLayout(1, 0));
+        // Button to pause the simulation
+        JButton pauseButton = new JButton("PAUSE");
+        pauseButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Simulation.pause();
+            }
+        });
+        // Button to resume the simulation
+        // Button to reset the simuation
+
+        buttonsPanel.add(pauseButton);
+        frame.add(buttonsPanel, BorderLayout.NORTH);
 
         frame.setVisible(true);
     }

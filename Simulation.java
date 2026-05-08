@@ -2,6 +2,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Simulation {
+    private static Timer timer;
     private static long elapsedTime;
     private static long timeStep = 1; // 1 millisecond
     private static double lastInclination;
@@ -25,7 +26,7 @@ public class Simulation {
         lastInclinationRate = (pendulum.getInclination() - lastInclination) / (timeStep / 1000.0);
 
         Visualization visual = new Visualization(pendulum);
-        Timer timer = new Timer();
+        timer = new Timer();
         
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run(){
@@ -56,5 +57,9 @@ public class Simulation {
                 }
             }
         }, 0, timeStep);
+    }
+
+    public static void pause(){
+        timer.cancel();
     }
 }
