@@ -30,7 +30,7 @@ public class Visualization {
         frame.add(dataPanel, BorderLayout.SOUTH);
 
         // Buttons to control the simulation
-        JPanel buttonsPanel = new JPanel(new GridLayout(1, 0));
+        JPanel buttonsPanel = new JPanel(new GridLayout(1, 0, 10, 20));
         // Button to pause the simulation
         JButton pauseButton = new JButton("PAUSE");
         pauseButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
@@ -41,9 +41,27 @@ public class Visualization {
             }
         });
         // Button to resume the simulation
+        JButton resumeButton = new JButton("RESUME");
+        resumeButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        resumeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Simulation.resume();
+            }
+        });
         // Button to reset the simuation
+        JButton resetButton = new JButton("RESET");
+        resetButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Simulation.reset();
+            }
+        });
 
         buttonsPanel.add(pauseButton);
+        buttonsPanel.add(resumeButton);
+        buttonsPanel.add(resetButton);
         frame.add(buttonsPanel, BorderLayout.NORTH);
 
         frame.setVisible(true);
