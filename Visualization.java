@@ -19,7 +19,7 @@ public class Visualization {
         frame.setSize(800, 800);
 
         // Panel to draw the pendulum
-        pendulumPanel = new PendulumPanel(pendulum);
+        pendulumPanel = new PendulumPanel();
         frame.add(pendulumPanel, BorderLayout.CENTER);
 
         // Bottom panel with data output

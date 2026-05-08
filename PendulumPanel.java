@@ -10,16 +10,13 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.*;
 
 public class PendulumPanel extends JPanel {
-    private Pendulum pendulum;
     private final double METERS_TO_PIXELS = 200.0;
-
-    public PendulumPanel(Pendulum pendulum) {
-        this.pendulum = pendulum;
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
+        Pendulum pendulum = Simulation.getPendulum();
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
