@@ -82,7 +82,7 @@ public class Simulation {
     public static void setup(){
         // Initializes the pendulum
         pendulum = new Pendulum(1.0, new Vector(0, 0),
-                                        new Vector(0, 0), Math.PI / 4, 1.0);
+                                        new Vector(0, 0), Math.PI / 4, 3.0);
 
         // Sets all valuse to initial and gets some first data points to correctly calculate the period in the main loop
         elapsedTime = 0;

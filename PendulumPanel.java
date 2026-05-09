@@ -6,6 +6,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -46,10 +47,10 @@ public class PendulumPanel extends JPanel {
         // Draws all points in the path trail (if enabled)
         if(showPath){
             g2.setPaint(Color.RED);
-            Vector[] pathTrail = Simulation.getPathTrail().toArray(Vector[]::new);
-            for(int i = 0; i < pathTrail.length; i++){
-                g2.fill(new Ellipse2D.Double(pivotCenter.getX() + pathTrail[i].getX() * METERS_TO_PIXELS - 2.5,
-                                            pivotCenter.getY() + pathTrail[i].getY() * METERS_TO_PIXELS - 2.5,
+            ArrayList<Vector> pathTrail = Simulation.getPathTrail();
+            for(int i = 0; i < pathTrail.size(); i++){
+                g2.fill(new Ellipse2D.Double(pivotCenter.getX() + pathTrail.get(i).getX() * METERS_TO_PIXELS - 2.5,
+                                            pivotCenter.getY() + pathTrail.get(i).getY() * METERS_TO_PIXELS - 2.5,
                                             5, 5));
             }
         }
