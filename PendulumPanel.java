@@ -46,9 +46,10 @@ public class PendulumPanel extends JPanel {
         // Draws all points in the path trail (if enabled)
         if(showPath){
             g2.setPaint(Color.RED);
-            for(Vector point : Simulation.getPathTrail()){
-                g2.fill(new Ellipse2D.Double(pivotCenter.getX() + point.getX() * METERS_TO_PIXELS - 2.5,
-                                            pivotCenter.getY() + point.getY() * METERS_TO_PIXELS - 2.5,
+            Vector[] pathTrail = Simulation.getPathTrail().toArray(Vector[]::new);
+            for(int i = 0; i < pathTrail.length; i++){
+                g2.fill(new Ellipse2D.Double(pivotCenter.getX() + pathTrail[i].getX() * METERS_TO_PIXELS - 2.5,
+                                            pivotCenter.getY() + pathTrail[i].getY() * METERS_TO_PIXELS - 2.5,
                                             5, 5));
             }
         }

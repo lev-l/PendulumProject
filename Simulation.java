@@ -56,10 +56,6 @@ public class Simulation {
                 // Updates the last state to current state
                 lastInclinationRate = inclinationRate;
                 lastInclination = pendulum.getInclination();
-                
-                // Updates the data outputs and graphics
-                visual.update(period, Math.round(Math.abs(maxInclination * 180 / Math.PI)));
-                elapsedTime += timeStep;
 
                 // Debug outputs and path tracking every 0.1 seconds
                 if(elapsedTime % 50 == 0){
@@ -68,6 +64,10 @@ public class Simulation {
                         pathTrail.remove(0);
                     }
                 }
+                
+                // Updates the data outputs and graphics
+                visual.update(period, Math.round(Math.abs(maxInclination * 180 / Math.PI)));
+                elapsedTime += timeStep;
             }
         }, 0, timeStep);
     }
@@ -83,11 +83,6 @@ public class Simulation {
         // Initializes the pendulum
         pendulum = new Pendulum(1.0, new Vector(0, 0),
                                         new Vector(0, 0), Math.PI / 4, 1.0);
-        
-        // Initial state printout
-        System.out.println("Time steps in simulation " + timeStep + " ms");
-        System.out.println("Initial position: " + pendulum.getPosition());
-        System.out.println("Initial inclination: " + pendulum.getInclination());
 
         // Sets all valuse to initial and gets some first data points to correctly calculate the period in the main loop
         elapsedTime = 0;
@@ -97,6 +92,10 @@ public class Simulation {
         maxInclination = lastInclination;
         lastUpdateTime = elapsedTime;
         period = 0.0;
+    }
+
+    public static long getElapsedTime() {
+        return elapsedTime;
     }
 
     // Needed for the visualization to have access to the physical model's state
