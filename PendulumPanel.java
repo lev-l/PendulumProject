@@ -11,6 +11,7 @@ import javax.swing.*;
 
 public class PendulumPanel extends JPanel {
     private final double METERS_TO_PIXELS = 200.0;
+    private boolean showPath = false;
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -41,5 +42,19 @@ public class PendulumPanel extends JPanel {
         // Draws the rod from the pivot to pendulum's position.
         g2.draw(new Line2D.Double(pivotCenter.getX(), pivotCenter.getY(),
                                 pendulumCenter.getX(), pendulumCenter.getY()));
+
+        // Draws all points in the path trail (if enabled)
+        if(showPath){
+            g2.setPaint(Color.RED);
+            for(Vector point : Simulation.getPathTrail()){
+                g2.fill(new Ellipse2D.Double(pivotCenter.getX() + point.getX() * METERS_TO_PIXELS - 2.5,
+                                            pivotCenter.getY() + point.getY() * METERS_TO_PIXELS - 2.5,
+                                            5, 5));
+            }
+        }
+    }
+
+    public void switchPathTrail(){
+        showPath = !showPath;
     }
 }

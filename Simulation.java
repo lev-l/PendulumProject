@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,6 +13,7 @@ public class Simulation {
     private static double lastInclinationRate; // The previous value of the inclination time derivative
     private static long lastUpdateTime; // The last time the period was updated, used to find a new period
     private static double period; // The period of the pendulum
+    private static ArrayList<Vector> pathTrail = new ArrayList<Vector>(); // Stores path points
     private static boolean isRunning; // Indicates whether simulation timer is on
 
     public static void main(String[] args) {
@@ -59,11 +61,12 @@ public class Simulation {
                 visual.update(period, Math.round(Math.abs(maxInclination * 180 / Math.PI)));
                 elapsedTime += timeStep;
 
-                // Debug outputs every 0.1 seconds
-                if(elapsedTime % 100 == 0){
-                    System.out.println("At time: " + elapsedTime + " ms, calculated period " + period + " seconds");
-                    System.out.println("Inclination at " + elapsedTime + " ms: " + pendulum.getInclination() * 180 / Math.PI);
-                    System.out.println("---");
+                // Debug outputs and path tracking every 0.1 seconds
+                if(elapsedTime % 50 == 0){
+                    pathTrail.add(pendulum.getPosition());
+                    if(pathTrail.size() > 50){
+                        pathTrail.remove(0);
+                    }
                 }
             }
         }, 0, timeStep);
@@ -99,5 +102,9 @@ public class Simulation {
     // Needed for the visualization to have access to the physical model's state
     public static Pendulum getPendulum() {
         return pendulum;
+    }
+
+    public static ArrayList<Vector> getPathTrail() {
+        return pathTrail;
     }
 }

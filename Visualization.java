@@ -64,6 +64,21 @@ public class Visualization {
         buttonsPanel.add(resetButton);
         frame.add(buttonsPanel, BorderLayout.NORTH);
 
+        // Simulation parameters
+        JPanel parametersPanel = new JPanel();
+        // Checkbox controlling whether to show the trail path of the pendulum
+        JCheckBox pathTrailCheck = new JCheckBox("Path Trail");
+        pathTrailCheck.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        pathTrailCheck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pendulumPanel.switchPathTrail();
+            }
+        });
+
+        parametersPanel.add(pathTrailCheck);
+        frame.add(parametersPanel, BorderLayout.WEST);
+
         frame.setVisible(true);
     }
 
