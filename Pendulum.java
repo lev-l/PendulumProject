@@ -57,7 +57,7 @@ public class Pendulum extends PhysicalModel {
         return getPosition();
     }
     
-    // Updates the length of the pendulum; preseravtion physical quantities is satisfied
+    // Updates the length of the pendulum; preservation laws are already satisfied
     public void updateLength(double newLength){
         length = newLength;
         setPosition(translateWeightPosition(inclination, length, pivotPosition));
