@@ -28,6 +28,7 @@ public class Simulation {
             }
         }, 0, 16); // Updates every 16 ms, around 60 FPS
 
+        timer = new Timer();
         isRunning = false; // The simulation is stopped initially
     }
 
