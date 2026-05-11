@@ -5,13 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class Visualization {
     private JTextArea textDataOutput; 
     private PendulumPanel pendulumPanel;
     private double period;
 
-    public Visualization(Pendulum pendulum)
+    public Visualization()
     {
         // Main window
         JFrame frame = new JFrame("Pendulum Simulation");
@@ -85,6 +87,12 @@ public class Visualization {
         lengthSlider.setMajorTickSpacing(25);
         lengthSlider.setPaintTicks(true);
         lengthSlider.setPaintLabels(true);
+        lengthSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                Simulation.getPendulum().updateLength(lengthSlider.getValue() / 100.0); // cm to m
+            }
+        });
 
         parametersPanel.add(pathTrailCheck);
         parametersPanel.add(lengthSlider);

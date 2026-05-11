@@ -20,8 +20,15 @@ public class Simulation {
         setup();
 
         // Starts the simulation window
-        visual = new Visualization(pendulum);
-        resume();
+        visual = new Visualization();
+        Timer visualUpdate = new Timer();
+        visualUpdate.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                visual.update(period, Math.round(Math.abs(maxInclination * 180 / Math.PI)));
+            }
+        }, 0, 16); // Updates every 16 ms, around 60 FPS
+
+        isRunning = false; // The simulation is stopped initially
     }
 
     // Stops the simulation loop
@@ -36,7 +43,7 @@ public class Simulation {
         if(isRunning) return;
 
         isRunning = true;
-        // Starts the simulation (physics and graphics on the same update)
+        // Starts the simulation (physics update loop)
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run(){
@@ -65,8 +72,6 @@ public class Simulation {
                     }
                 }
                 
-                // Updates the data outputs and graphics
-                visual.update(period, Math.round(Math.abs(maxInclination * 180 / Math.PI)));
                 elapsedTime += timeStep;
             }
         }, 0, timeStep);
@@ -76,13 +81,12 @@ public class Simulation {
     public static void reset(){
         pause();
         setup();
-        resume();
     }
 
     public static void setup(){
         // Initializes the pendulum
         pendulum = new Pendulum(1.0, new Vector(0, 0),
-                                        new Vector(0, 0), Math.PI / 4, 3.0);
+                                        new Vector(0, 0), Math.PI / 4, 1.0);
 
         // Sets all valuse to initial and gets some first data points to correctly calculate the period in the main loop
         elapsedTime = 0;

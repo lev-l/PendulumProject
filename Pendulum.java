@@ -56,4 +56,10 @@ public class Pendulum extends PhysicalModel {
         setPosition(translateWeightPosition(inclination, length, pivotPosition));
         return getPosition();
     }
+    
+    // Updates the length of the pendulum; preseravtion physical quantities is satisfied
+    public void updateLength(double newLength){
+        length = newLength;
+        setPosition(translateWeightPosition(inclination, length, pivotPosition));
+    }
 }
