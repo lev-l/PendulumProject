@@ -12,6 +12,8 @@ import javax.swing.event.ChangeListener;
 public class Visualization {
     private JTextArea textDataOutput; 
     private PendulumPanel pendulumPanel;
+    private JSlider lengthSlider;
+    private JSlider massSlider;
     private double period;
 
     public Visualization()
@@ -83,7 +85,7 @@ public class Visualization {
             }
         });
         // Slider to control pendulum length
-        JSlider lengthSlider = new JSlider(JSlider.VERTICAL, 25, 300, 100);
+        lengthSlider = new JSlider(JSlider.VERTICAL, 25, 300, 100);
         lengthSlider.setToolTipText("Set the length of the first pendulum, in centimeters.");
         lengthSlider.setMajorTickSpacing(25);
         lengthSlider.setPaintTicks(true);
@@ -95,12 +97,12 @@ public class Visualization {
             }
         });
         // Slider to control pendulum mass
-        JSlider massSlider = new JSlider(JSlider.VERTICAL, 100, 10000, 1000);
+        massSlider = new JSlider(JSlider.VERTICAL, 100, 10000, 1000);
         massSlider.setToolTipText("Set the mass of the first pendulum, in grams.");
         massSlider.setMajorTickSpacing(1000);
         massSlider.setPaintTicks(true);
         massSlider.setPaintLabels(true);
-        lengthSlider.addChangeListener(new ChangeListener() {
+        massSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e){
                 Simulation.getPendulum().updateMass(massSlider.getValue() / 1000.0); // g to kg

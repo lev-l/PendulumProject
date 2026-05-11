@@ -36,7 +36,7 @@ public class Pendulum extends PhysicalModel {
         *  The magnitude is found to balance that component of gravity and produce the correct centripetal force.
         */
         double gravityAlongRodMagnitude = gravityForce.getMagnitude() * Math.cos(inclination);
-        double tensionForceMagnitude = Math.pow(getVelocity().getMagnitude(), 2) / length
+        double tensionForceMagnitude = getMass() * Math.pow(getVelocity().getMagnitude(), 2) / length
                                         + gravityAlongRodMagnitude;
         Vector tensionForce = new Vector(new double[]{tensionForceMagnitude, inclination + Math.PI / 2});
         

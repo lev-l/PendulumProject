@@ -38,7 +38,7 @@ public class PendulumPanel extends JPanel {
         Vector pendulumCenter = new Vector(pivotCenter.getX() + pendulum.getPosition().getX() * METERS_TO_PIXELS,
                                         pivotCenter.getY() + pendulum.getPosition().getY() * METERS_TO_PIXELS);
         // Finds the radius of a sphere with the given mass -> cube root of 3m / (4*pi*rho)
-        double radius = Math.pow(3.0 * Simulation.getPendulum().getMass() / (4.0 * Math.PI * MASS_DENSITY),
+        double radius = Math.pow(3.0 * pendulum.getMass() / (4.0 * Math.PI * MASS_DENSITY),
                                 1.0/3.0);
         radius *= METERS_TO_PIXELS;
         g2.fill(new Ellipse2D.Double(pivotCenter.getX() + pendulum.getPosition().getX() * METERS_TO_PIXELS - radius,
