@@ -34,6 +34,7 @@ public class Visualization {
         // Button to pause the simulation
         JButton pauseButton = new JButton("PAUSE");
         pauseButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        pauseButton.setFocusable(false);
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,6 +44,7 @@ public class Visualization {
         // Button to resume the simulation
         JButton resumeButton = new JButton("RESUME");
         resumeButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        resumeButton.setFocusable(false);
         resumeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,6 +54,7 @@ public class Visualization {
         // Button to reset the simuation
         JButton resetButton = new JButton("RESET");
         resetButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        resetButton.setFocusable(false);
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,6 +72,7 @@ public class Visualization {
         // Checkbox controlling whether to show the trail path of the pendulum
         JCheckBox pathTrailCheck = new JCheckBox("Path Trail");
         pathTrailCheck.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        pathTrailCheck.setFocusable(false);
         pathTrailCheck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
