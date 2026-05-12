@@ -2,12 +2,14 @@ public class Pendulum extends PhysicalModel {
     private Vector pivotPosition; // The fixed position of the pivot.
     private double inclination; // The angle from the vertical, radians.
     private double length; // The length of the pendulum rod.
+    private double dampingCoefficient; // A single coefficient for air drag
 
-    public Pendulum(double mass, Vector pivotPosition, Vector initialVelocity, double initialInclination, double length){
+    public Pendulum(double mass, Vector pivotPosition, Vector initialVelocity, double initialInclination, double length, double damping){
         super(mass, translateWeightPosition(initialInclination, length, pivotPosition), initialVelocity);
         this.pivotPosition = pivotPosition;
         this.inclination = initialInclination;
         this.length = length;
+        this.dampingCoefficient = damping;
     }
 
     public Vector getPivotPosition(){
@@ -20,6 +22,10 @@ public class Pendulum extends PhysicalModel {
 
     public double getLength(){
         return length;
+    }
+
+    public double getDampingCoefficient(){
+        return dampingCoefficient;
     }
 
     // Finds the position of the pendulum's weight based on pivot position, inclination, and length.
@@ -39,8 +45,10 @@ public class Pendulum extends PhysicalModel {
         double tensionForceMagnitude = getMass() * Math.pow(getVelocity().getMagnitude(), 2) / length
                                         + gravityAlongRodMagnitude;
         Vector tensionForce = new Vector(new double[]{tensionForceMagnitude, inclination + Math.PI / 2});
-        
-        Vector[] forces = new Vector[]{gravityForce, tensionForce};
+        // Finds the drag force from -k*v^2
+        Vector dragForce = getVelocity().multiply(-dampingCoefficient * getVelocity().getMagnitude());
+
+        Vector[] forces = new Vector[]{gravityForce, tensionForce, dragForce};
 
         // Finds the state variables (net force, acceleration, velocity) and updates position.
         Vector netForce = calculateNetForce(forces);
@@ -65,9 +73,14 @@ public class Pendulum extends PhysicalModel {
 
     // Updates inclination when at rest
     public void updateInclination(double newInclination){
-        if(Math.round(getVelocity().getMagnitude()) == 0){
+        if(getVelocity().getMagnitude() < 0.00001){
             inclination = newInclination;
             setPosition(translateWeightPosition(inclination, length, pivotPosition));
         }
+    }
+
+    // Updates the the damping coefficient from a given percentage value
+    public void updateDrag(double newDampingCoefficient){
+        dampingCoefficient = newDampingCoefficient / 100.0;
     }
 }

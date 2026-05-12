@@ -20,7 +20,8 @@ public class Simulation {
     public static void main(String[] args) {
         initialInclination = Math.PI / 4; // 45 degrees
         pendulum = new Pendulum(1, new Vector(0, 0),
-                                new Vector(0, 0), initialInclination, 1.0);
+                                new Vector(0, 0), initialInclination,
+                                1.0, 0.0);
         setup();
 
         // Starts the simulation window
@@ -91,7 +92,8 @@ public class Simulation {
     public static void setup(){
         // Initializes the pendulum
         pendulum = new Pendulum(pendulum.getMass(), new Vector(0, 0),
-                                        new Vector(0, 0), initialInclination, pendulum.getLength());
+                                        new Vector(0, 0), initialInclination,
+                                        pendulum.getLength(), pendulum.getDampingCoefficient());
 
         // Sets all valuse to initial and gets some first data points to correctly calculate the period in the main loop
         elapsedTime = 0;

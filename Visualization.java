@@ -70,7 +70,7 @@ public class Visualization {
         frame.add(buttonsPanel, BorderLayout.NORTH);
 
         // Simulation parameters
-        JPanel parametersPanel = new JPanel(new GridLayout(0, 1, 10, 30));
+        JPanel parametersPanel = new JPanel(new GridLayout(0, 1, 10, 15));
         // Checkbox controlling whether to show the trail path of the pendulum
         JCheckBox pathTrailCheck = new JCheckBox("Path Trail");
         pathTrailCheck.setFont(new Font("Times New Roman", Font.PLAIN, 18));
@@ -123,6 +123,24 @@ public class Visualization {
         parametersPanel.add(massSlider);
         parametersPanel.add(inclinationSlider);
         frame.add(parametersPanel, BorderLayout.WEST);
+
+        // Simulation parameters on the right side
+        JPanel parametersPanel2 = new JPanel(new GridLayout(0, 1, 10, 15));
+        // Damping coeffeficient slider
+        JSlider dampingSlider = new JSlider(JSlider.VERTICAL, 0, 90, 0);
+        dampingSlider.setToolTipText("Set the damping coefficient of the pendulum, in percentage.");
+        dampingSlider.setMajorTickSpacing(15);
+        dampingSlider.setPaintTicks(true);
+        dampingSlider.setPaintLabels(true);
+        dampingSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e){
+                Simulation.getPendulum().updateDrag(dampingSlider.getValue());
+            }
+        });
+
+        parametersPanel2.add(dampingSlider);
+        frame.add(parametersPanel2, BorderLayout.EAST);
 
         frame.setVisible(true);
     }
