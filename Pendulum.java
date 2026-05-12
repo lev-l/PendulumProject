@@ -62,4 +62,12 @@ public class Pendulum extends PhysicalModel {
         length = newLength;
         setPosition(translateWeightPosition(inclination, length, pivotPosition));
     }
+
+    // Updates inclination when at rest
+    public void updateInclination(double newInclination){
+        if(Math.round(getVelocity().getMagnitude()) == 0){
+            inclination = newInclination;
+            setPosition(translateWeightPosition(inclination, length, pivotPosition));
+        }
+    }
 }

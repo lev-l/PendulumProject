@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +11,6 @@ import javax.swing.event.ChangeListener;
 public class Visualization {
     private JTextArea textDataOutput; 
     private PendulumPanel pendulumPanel;
-    private JSlider lengthSlider;
-    private JSlider massSlider;
     private double period;
 
     public Visualization()
@@ -85,33 +82,46 @@ public class Visualization {
             }
         });
         // Slider to control pendulum length
-        lengthSlider = new JSlider(JSlider.VERTICAL, 25, 300, 100);
-        lengthSlider.setToolTipText("Set the length of the first pendulum, in centimeters.");
-        lengthSlider.setMajorTickSpacing(25);
+        JSlider lengthSlider = new JSlider(JSlider.VERTICAL, 2, 30, 10);
+        lengthSlider.setToolTipText("Set the length of the first pendulum, in decimeters.");
+        lengthSlider.setMajorTickSpacing(4);
         lengthSlider.setPaintTicks(true);
         lengthSlider.setPaintLabels(true);
         lengthSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                Simulation.getPendulum().updateLength(lengthSlider.getValue() / 100.0); // cm to m
+                Simulation.getPendulum().updateLength(lengthSlider.getValue() / 10.0); // cm to m
             }
         });
         // Slider to control pendulum mass
-        massSlider = new JSlider(JSlider.VERTICAL, 100, 10000, 1000);
-        massSlider.setToolTipText("Set the mass of the first pendulum, in grams.");
-        massSlider.setMajorTickSpacing(1000);
+        JSlider massSlider = new JSlider(JSlider.VERTICAL, 1, 100, 10);
+        massSlider.setToolTipText("Set the mass of the first pendulum, in g*10^2.");
+        massSlider.setMajorTickSpacing(10);
         massSlider.setPaintTicks(true);
         massSlider.setPaintLabels(true);
         massSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e){
-                Simulation.getPendulum().updateMass(massSlider.getValue() / 1000.0); // g to kg
+                Simulation.getPendulum().updateMass(massSlider.getValue() / 10.0); // g to kg
+            }
+        });
+        // Slider to control initial inclination
+        JSlider inclinationSlider = new JSlider(JSlider.VERTICAL, -45, 45, 45);
+        inclinationSlider.setToolTipText("Set the initial inclination of the pendulum, in degrees.");
+        inclinationSlider.setMajorTickSpacing(15);
+        inclinationSlider.setPaintTicks(true);
+        inclinationSlider.setPaintLabels(true);
+        inclinationSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e){
+                Simulation.setInitialInclination(Math.toRadians(inclinationSlider.getValue()));
             }
         });
 
         parametersPanel.add(pathTrailCheck);
         parametersPanel.add(lengthSlider);
         parametersPanel.add(massSlider);
+        parametersPanel.add(inclinationSlider);
         frame.add(parametersPanel, BorderLayout.WEST);
 
         frame.setVisible(true);
@@ -119,7 +129,9 @@ public class Visualization {
 
     public void update(double period, double inclination) {
         this.period = period;
-        textDataOutput.setText("Period: " + period + " seconds;    Amplitude: " + inclination + " degrees;");
+        textDataOutput.setText("Period: " + period + " seconds;    Amplitude: " + inclination + " degrees;    "
+                                + "Length: " + Simulation.getPendulum().getLength() + " m;    Mass: " + Simulation.getPendulum().getMass() + " kg;"
+        );
         pendulumPanel.repaint();
     }
 }
