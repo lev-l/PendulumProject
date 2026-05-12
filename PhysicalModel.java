@@ -56,6 +56,12 @@ public class PhysicalModel {
         return position;
     }
 
+    // Updates mass of the pendulum preserving momentum
+    public void updateMass(double newMass){
+        velocity = velocity.multiply(mass).multiply(1/newMass);
+        mass = newMass;
+    }
+
     protected void setPosition(Vector newPosition){
         this.position = newPosition;
     }
