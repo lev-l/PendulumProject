@@ -14,9 +14,14 @@ public class Simulation {
     private static long lastUpdateTime; // The last time the period was updated, used to find a new period
     private static double period; // The period of the pendulum
     private static ArrayList<Vector> pathTrail = new ArrayList<Vector>(); // Stores path points
+    private static double initialInclination;
     private static boolean isRunning; // Indicates whether simulation timer is on
 
     public static void main(String[] args) {
+        initialInclination = Math.PI / 4; // 45 degrees
+        pendulum = new Pendulum(1, new Vector(0, 0),
+                                new Vector(0, 0), initialInclination,
+                                1.0, 0.0);
         setup();
 
         // Starts the simulation window
@@ -86,8 +91,9 @@ public class Simulation {
 
     public static void setup(){
         // Initializes the pendulum
-        pendulum = new Pendulum(1.0, new Vector(0, 0),
-                                        new Vector(0, 0), Math.PI / 4, 1.0);
+        pendulum = new Pendulum(pendulum.getMass(), new Vector(0, 0),
+                                        new Vector(0, 0), initialInclination,
+                                        pendulum.getLength(), pendulum.getDampingCoefficient());
 
         // Sets all valuse to initial and gets some first data points to correctly calculate the period in the main loop
         elapsedTime = 0;
@@ -97,6 +103,21 @@ public class Simulation {
         maxInclination = lastInclination;
         lastUpdateTime = elapsedTime;
         period = 0.0;
+    }
+
+    public static void setInitialInclination(double inclination){
+        if(inclination < -Math.PI / 4){
+            inclination = -Math.PI / 4;
+        } else if(inclination > Math.PI / 4){
+            inclination = Math.PI / 4;
+        }
+        
+        initialInclination = inclination;
+
+        if(!isRunning){
+            pendulum.updateInclination(inclination);
+            maxInclination = inclination;
+        }
     }
 
     public static long getElapsedTime() {
