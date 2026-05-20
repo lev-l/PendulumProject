@@ -5,6 +5,7 @@ import java.util.TimerTask;
 public class Simulation {
     private static Timer timer; // The loop timer
     private static Pendulum pendulum; // Main physical object
+    private static Pendulum childPendulum; // A second pendulum attached to the first one
     private static Visualization visual; // Simulation window
     private static long elapsedTime; // How many milliseconds since start of simulation
     private static long timeStep = 1; // 1 millisecond
@@ -22,6 +23,9 @@ public class Simulation {
         pendulum = new Pendulum(1, new Vector(0, 0),
                                 new Vector(0, 0), initialInclination,
                                 1.0, 0.0);
+        childPendulum = new ChildPendulum(0.5, pendulum.getPosition(),
+                                        new Vector(0, 0), -initialInclination / 2.0,
+                                        0.5, 0.0);
         setup();
 
         // Starts the simulation window
@@ -94,6 +98,9 @@ public class Simulation {
         pendulum = new Pendulum(pendulum.getMass(), new Vector(0, 0),
                                         new Vector(0, 0), initialInclination,
                                         pendulum.getLength(), pendulum.getDampingCoefficient());
+        childPendulum = new ChildPendulum(childPendulum.getMass(), pendulum.getPosition(),
+                                        new Vector(0, 0), -initialInclination / 2.0,
+                                        childPendulum.getLength(), childPendulum.getDampingCoefficient());
 
         // Sets all valuse to initial and gets some first data points to correctly calculate the period in the main loop
         elapsedTime = 0;
@@ -127,6 +134,10 @@ public class Simulation {
     // Needed for the visualization to have access to the physical model's state
     public static Pendulum getPendulum() {
         return pendulum;
+    }
+
+    public static Pendulum getChildPendulum() {
+        return childPendulum;
     }
 
     public static ArrayList<Vector> getPathTrail() {

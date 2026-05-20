@@ -18,23 +18,33 @@ public class PendulumPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-        Pendulum pendulum = Simulation.getPendulum();
-        Graphics2D g2 = (Graphics2D) g;
 
+        Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON);
         
+        renderPendulum(g2, Simulation.getPendulum(), false);
+        renderPendulum(g2, Simulation.getChildPendulum(), true);
+    }
+
+    private void renderPendulum(Graphics2D g2, Pendulum pendulum, boolean child){
         g2.setPaint(Color.BLACK);
         g2.setStroke(new BasicStroke(2));
 
         // Draws the pivot and stores its center for future reference
-        double centerX = getWidth() / 2.0;
-        double yOffset = 50;
-        Vector pivotCenter = new Vector(centerX, yOffset + 10);
-        g2.fill(new Rectangle2D.Double(centerX - 10, yOffset, 20, 20));
+        Vector pivotCenter;
+        if(!child){
+            double centerX = getWidth() / 2.0;
+            double yOffset = 50;
+            pivotCenter = new Vector(centerX, yOffset + 10);
+            g2.fill(new Rectangle2D.Double(centerX - 10, yOffset, 20, 20));
+        }
+        else{
+            pivotCenter = new Vector(pendulum.getPivotPosition().getX() * METERS_TO_PIXELS,
+                                    pendulum.getPivotPosition().getY() * METERS_TO_PIXELS);
+        }
 
-        // Draws the pedndulum's mass and store its center for future reference.
+        // Draws the pedndulum's mass and stores its center for future reference.
         Vector pendulumCenter = new Vector(pivotCenter.getX() + pendulum.getPosition().getX() * METERS_TO_PIXELS,
                                         pivotCenter.getY() + pendulum.getPosition().getY() * METERS_TO_PIXELS);
         // Finds the radius of a sphere with the given mass -> cube root of 3m / (4*pi*rho)
